@@ -4,10 +4,3 @@ module.exports = {
     themeColor: '#212121'
   }
 }
-
-new Vue({
-  el: '#app',
-  router,
-  components: { App },
-  template: '<dist/>',
-});
