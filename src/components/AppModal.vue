@@ -54,7 +54,7 @@
       </div>
     </div>
   </div>
-  <!-- Modal -->
+  <!-- Modal. -->
 </template>
 
 <script>
