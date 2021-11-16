@@ -1,13 +1,8 @@
 module.exports = {
   pwa: {
     name: 'marvel',
-    themeColor: '#212121'
+    themeColor: '#212121',
+
+    publicPath: '/JSFREE-2/'
   }
 }
-
-new Vue({
-  el: '#app',
-  router,
-  components: { App },
-  template: '<dist/>',
-});
