@@ -13,7 +13,9 @@
           class="form-control me-2"
           placeholder="Поиск..."
           aria-label="search"
-        />
+          v-model.trim="search" 
+          @input="changeSearch(search)"
+        /> <!-- Оператор trim убирает ненужные пробелы в начале и в конце запроса для большей корректности поискового запроса -->
         <button type="submit" class="btn btn-outline-light">Все</button>
       </form>
     </div>
@@ -23,8 +25,11 @@
 <script>
 export default {
   name: "AppHeader",
+  props: ['changeSearch'],
   data() {
-    return {};
+    return {
+      search: '',
+    };
   },
 };
 </script>

@@ -1,32 +1,30 @@
 <template>
   <div id="app">
-    <app-header />
+    <app-header :changeSearch="changeSearch" />
 
     <div class="container">
       <h1 class="pt-3 pb-3">Персонажи Marvel</h1>
 
-      <app-modal :character="getCharacter" />
+      <app-modal :character="getCharactersInfo" />
 
       <spinner v-if="loading" />
 
-      <div class="row">
+      <div v-else class="row">
+        <h5 v-if="!searchCharacters.length && !loading">Ничего не найдено</h5>
         <div
-          v-for="(el, idx) in characters"
+          v-else
+          v-for="(el, idx) in searchCharacters"
+          :key="el.id"
           class="card mb-3 col-sm-12 col-md-6 col-lg-4"
         >
-          <div class="row g-8">
-            <div class="col-md-4">
-              <img
-                class="img-fluid rounded-start"
-                :src="el.thumbnail"
-                :alt="el.name"
-                style="max-width: 100%"
-              />
+          <div class="row g-0">
+            <div class="col-4">
+              <img style="max-width: 100%" :src="el.thumbnail" :alt="el.name" />
             </div>
-            <div class="col-md-8">
+            <div class="col-8">
               <div class="card-body">
                 <h5 class="card-title">{{ el.name }}</h5>
-                <!-- Button trigger modal -->
+
                 <button
                   type="button"
                   class="btn btn-secondary btn-sm"
@@ -36,7 +34,6 @@
                 >
                   Подробнее
                 </button>
-                <!-- Button trigger modal -->
               </div>
             </div>
           </div>
@@ -50,7 +47,6 @@
 import Spinner from "./components/Spinner";
 import AppModal from "./components/AppModal";
 import AppHeader from "./components/AppHeader";
-
 export default {
   name: "App",
   components: {
@@ -63,18 +59,30 @@ export default {
       loading: false,
       characters: [],
       characterIndex: 0,
+      search: "",
     };
   },
   methods: {
     getCharacters: function () {
-      return fetch("https://netology-api-marvel.herokuapp.com/characters")
+      return fetch(`https://netology-api-marvel.herokuapp.com/characters`)
         .then((res) => res.json())
         .then((json) => (this.characters = json));
     },
+    changeSearch: function (value) {
+      this.search = value;
+    },
   },
   computed: {
-    getCharacter: function () {
-      return this.characters[this.characterIndex] || null;
+    getCharactersInfo: function () {
+      return this.searchCharacters[this.characterIndex] || null;
+    },
+    searchCharacters: function () {
+      const { characters, search } = this;
+      return characters.filter((character) => {
+        return (
+          character.name.toLowerCase().indexOf(search.toLowerCase()) !== -1
+        );
+      });
     },
   },
   async mounted() {

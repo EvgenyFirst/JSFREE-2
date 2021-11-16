@@ -37,7 +37,9 @@
 
           <h5>Комиксы:</h5>
           <ul>
-            <li v-for="elComics in character.comics">{{ elComics.name }}</li>
+            <li v-for="elComics in character.comics" :key="elComics.id">
+              {{ elComics.name }}
+            </li>
           </ul>
         </div>
         <div class="modal-footer">
