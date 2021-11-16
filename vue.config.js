@@ -6,8 +6,8 @@ module.exports = {
 }
 
 new Vue({
-  el: '#dist',
+  el: '#app',
   router,
-  components: { dist },
+  components: { App },
   template: '<dist/>',
 });
